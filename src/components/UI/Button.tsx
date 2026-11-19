@@ -21,7 +21,7 @@ const Button: React.FC<ButtonProps> = ({
   loading,
 }) => {
   const buttonClasses = twMerge(
-    `w-full rounded-lg bg-primary px-3 py-2 text-white text-sm sm:text-base shadow-md transition-all hover:bg-primary/80 hover:shadow-lg active:scale-95 focus:outline-none focus:ring-2 cursor-pointer focus:ring-primary/50 sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed`,
+    "inline-flex min-h-10 w-full cursor-pointer items-center justify-center gap-2 rounded-md border border-primary/20 bg-primary px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-teal-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 disabled:cursor-not-allowed disabled:opacity-40 sm:w-auto",
     className
   );
 

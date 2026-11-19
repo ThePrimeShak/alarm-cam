@@ -1,9 +1,3 @@
-export type UserInfo = {
-  email: string;
-  sendEmail: boolean;
-  // alarmcam_detections: Detection[];
-};
-
 export type Detection = {
   id: number;
   timestamp: string;

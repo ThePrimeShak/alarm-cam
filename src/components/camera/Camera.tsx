@@ -29,6 +29,7 @@ const Camera: React.FC = () => {
   // Background reset state
   const [resetBgSignal, setResetBgSignal] = useState(0);
   const pauseToastShownRef = useRef(false);
+  const enableRequestRef = useRef(0);
 
   useEffect(() => {
     loadDetections();
@@ -120,6 +121,7 @@ const Camera: React.FC = () => {
   }
 
   const handleToggleDetection = (isChecked: boolean) => {
+    const requestId = ++enableRequestRef.current;
     setEnableRequested(isChecked);
 
     if (isChecked) {
@@ -127,29 +129,47 @@ const Camera: React.FC = () => {
         ENABLE_COUNTDOWN_SECONDS * 1000,
         "Detection enabling in"
       );
-      taskPromise.then(() => setIsAlarmEnabled(true));
+      taskPromise.then(() => {
+        if (enableRequestRef.current === requestId) setIsAlarmEnabled(true);
+      });
     } else setIsAlarmEnabled(false);
   };
 
   return (
-    <>
-      <section className="mx-auto my-5 max-w-4xl p-5">
-        <div className="mb-5 flex justify-between">
-          <Checkbox
-            className="font-medium"
-            label="Enable Detection"
-            name="enable-detection"
-            checked={enableRequested}
-            onChange={(isChecked) => handleToggleDetection(isChecked)}
-          />
+    <section className="container py-8 sm:py-10">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-7 flex flex-col justify-between gap-4 border-b border-white/10 pb-6 md:flex-row md:items-end">
+          <div>
+            <p className="text-primary mb-2 text-sm font-medium">
+              University Artificial Intelligence Course Project
+            </p>
+            <h1 className="text-2xl font-semibold sm:text-3xl">
+              Motion Detection Dashboard
+            </h1>
+            <p className="text-secondary mt-2 max-w-2xl text-sm leading-6">
+              A browser-based demonstration of background subtraction, adaptive
+              thresholds, and motion detection. Video processing stays on this
+              device.
+            </p>
+          </div>
 
-          <Checkbox
-            className="font-medium"
-            label="Save detections to storage"
-            name="save-detections"
-            checked={saveToStorage}
-            onChange={(isChecked) => setSaveToStorage(isChecked)}
-          />
+          <div className="bg-card/50 flex flex-col gap-3 rounded-lg border border-white/8 p-4 sm:flex-row sm:items-center sm:gap-5">
+            <Checkbox
+              className="font-medium"
+              label="Enable Detection"
+              name="enable-detection"
+              checked={enableRequested}
+              onChange={(isChecked) => handleToggleDetection(isChecked)}
+            />
+
+            <Checkbox
+              className="font-medium"
+              label="Save detections to storage"
+              name="save-detections"
+              checked={saveToStorage}
+              onChange={(isChecked) => setSaveToStorage(isChecked)}
+            />
+          </div>
         </div>
 
         <CameraView
@@ -161,14 +181,14 @@ const Camera: React.FC = () => {
           triggerResetBackground={triggerResetBackground}
         />
 
-        <div aria-label="Buttons of Detect Section" className="mt-5">
+        <div aria-label="Buttons of Detect Section" className="mt-6">
           <DetectionList detections={detections} />
-          <div className="mt-2 flex items-center justify-between gap-5">
+          <div className="mt-4 flex flex-col-reverse items-stretch justify-end gap-3 sm:flex-row sm:items-center">
             <Button
               type="button"
               onClick={resetDetections}
               disabled={!detections.length}
-              className="bg-secondary hover:bg-secondary/80"
+              className="border-white/10 bg-white/5 text-slate-300 shadow-none hover:bg-white/10 hover:text-white"
               loading={loadingResetBtn}
             >
               Clear List
@@ -183,8 +203,8 @@ const Camera: React.FC = () => {
             </Button>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
 

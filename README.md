@@ -1,6 +1,6 @@
-# Alarm Camera - Real-time Motion Detection System
+# Alarm Camera - University AI Course Project
 
-An advanced browser-based motion detection application built with React, TypeScript, and sophisticated computer vision algorithms. Transform your device's camera into an intelligent security monitor with real-time processing and smart detection capabilities.
+A browser-based motion detection application created as a university project for an Artificial Intelligence course. It uses React, TypeScript, and lightweight computer vision techniques to demonstrate real-time, local video processing.
 
 ## 🚀 Features
 
@@ -25,7 +25,7 @@ An advanced browser-based motion detection application built with React, TypeScr
 
 - **Local Storage**: Uses IndexedDB for offline detection history
 - **Export Functionality**: Download detection data as JSON for analysis
-- **User Preferences**: Persistent login and notification settings
+- **No account required**: The camera dashboard opens directly without login or email collection
 - **Real-time Statistics**: Live display of processing parameters and detection counts
 
 ### User Experience
@@ -69,7 +69,7 @@ An advanced browser-based motion detection application built with React, TypeScr
 
 ```bash
 # Clone the repository
-git clone https://github.com/shakurt/alarm-cam.git
+git clone https://github.com/ThePrimeShak/alarm-cam.git
 cd alarm-cam
 
 # Install dependencies
@@ -174,7 +174,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 👨‍💻 Author
 
-Developed by **ThePrimeShak** - [GitHub Profile](https://github.com/shakurt)
+Developed by **ThePrimeShak** — [LinkedIn](https://www.linkedin.com/in/theprimeshak/) · [GitHub](https://github.com/ThePrimeShak)
 
 ---
 

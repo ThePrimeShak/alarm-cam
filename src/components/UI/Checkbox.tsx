@@ -18,12 +18,12 @@ const Checkbox: React.FC<CheckboxProps> = ({
   name,
 }) => {
   const checkboxClass = twMerge(
-    "h-4 w-4 cursor-pointer rounded border-card bg-bg text-primary transition-all focus:outline-none accent-primary",
+    "peer h-4 w-4 cursor-pointer rounded border-white/20 bg-bg text-primary accent-primary transition focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
     className
   );
 
   return (
-    <label className="flex cursor-pointer items-center gap-2">
+    <label className="flex cursor-pointer items-center gap-2.5">
       <input
         type="checkbox"
         name={name}
@@ -33,7 +33,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
         onChange={(e) => onChange(e.target.checked)}
       />
       {label && (
-        <span className="text-white transition-colors select-none">
+        <span className="text-sm font-medium text-slate-300 transition-colors select-none peer-checked:text-white">
           {label}
         </span>
       )}

@@ -1,26 +1,49 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #2c3639;
-  --color-card: #3f4e4f;
-  --color-primary: #a27b5c;
-  --color-secondary: #dcd7c9;
+  --color-bg: #07111f;
+  --color-card: #101d2e;
+  --color-primary: #2dd4bf;
+  --color-secondary: #94a3b8;
 }
 
 html,
 body {
-  font-family: "Poppins", sans-serif;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
   height: 100%;
 }
 
 body {
   @apply bg-bg text-white;
+  min-width: 320px;
 }
 
 .container {
-  @apply mx-auto px-4;
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
 }
 
 a.active {
-  @apply decoration-primary underline underline-offset-8;
+  @apply text-white;
+}
+
+button,
+a,
+input {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  @apply bg-primary/30 text-white;
+}
+
+* {
+  scrollbar-color: #334155 transparent;
+  scrollbar-width: thin;
 }

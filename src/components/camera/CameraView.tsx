@@ -425,59 +425,98 @@ const CameraView: React.FC<Props> = ({
   }
 
   return (
-    <section aria-label="Camera Canvas">
-      <Card className="my-5" ariaLabel="info-box">
-        <span className="flex items-center justify-center gap-1 text-white">
-          Processing:{" "}
-          <span className="font-bold">{runningRef.current ? "ON" : "OFF"}</span>
-        </span>
-        <hr className="my-2" />
-        <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-white">
-          <Chip className="bg-[#10B981]">FPS: {PROCESS_FPS}</Chip>
-          <Chip className="bg-[#EF4444]">BG alpha: {ALPHA_BG}</Chip>
-          <Chip className="bg-[#2563EB]">EMA alpha: {EMA_ALPHA}</Chip>
-          <Chip className="bg-[#F59E0B]">
-            Pause (ms): {PAUSE_AFTER_DETECTION_MS}
-          </Chip>
+    <section
+      aria-label="Camera Canvas"
+      className="grid gap-5 lg:grid-cols-[1fr_280px]"
+    >
+      <div className="overflow-hidden rounded-lg border border-white/10 bg-black/30">
+        <div className="bg-card/70 flex items-center justify-between border-b border-white/8 px-4 py-3">
+          <span className="text-sm font-semibold">Live camera preview</span>
+          <span className="text-secondary rounded border border-white/8 bg-black/20 px-2.5 py-1 text-xs font-medium">
+            {enabled ? "Detecting" : "Preview"}
+          </span>
         </div>
-      </Card>
-
-      <div className="flex flex-col items-center gap-5 md:flex-row">
         <video
           ref={videoRef}
           muted
           playsInline
-          className="w-[500px] max-w-full flex-1 rounded-lg"
+          className="aspect-video w-full bg-black object-cover"
         />
+        <div className="bg-card/40 text-secondary flex items-center justify-between gap-3 border-t border-white/8 px-4 py-3 text-xs">
+          <span>Video stays on this device</span>
+          <span className="font-medium text-slate-400">
+            {PROCESS_FPS} FPS analysis
+          </span>
+        </div>
+      </div>
 
-        <div className="flex flex-col items-center justify-center">
-          <div className="text-xs text-gray-400">
-            Reference background:{" "}
+      <div className="flex flex-col gap-5">
+        <Card className="m-0" ariaLabel="info-box">
+          <div className="mb-4 flex items-center justify-between">
+            <div>
+              <p className="text-sm font-semibold text-white">
+                Detection engine
+              </p>
+              <p className="text-secondary mt-0.5 text-xs">
+                Live processing status
+              </p>
+            </div>
+            <span
+              className={`rounded px-2.5 py-1 text-xs font-medium ${enabled ? "bg-emerald-400/10 text-emerald-300" : "bg-slate-500/10 text-slate-400"}`}
+            >
+              {enabled ? "Online" : "Standby"}
+            </span>
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <div className="bg-bg/50 rounded-md p-3">
+              <span className="text-secondary block text-xs">Frame rate</span>
+              <strong className="mt-1 block text-sm">{PROCESS_FPS} FPS</strong>
+            </div>
+            <div className="bg-bg/50 rounded-md p-3">
+              <span className="text-secondary block text-xs">Pause</span>
+              <strong className="mt-1 block text-sm">
+                {PAUSE_AFTER_DETECTION_MS / 1000}s
+              </strong>
+            </div>
+          </div>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Chip className="bg-cyan-400/10 text-cyan-300">
+              BG α {ALPHA_BG}
+            </Chip>
+            <Chip className="bg-violet-400/10 text-violet-300">
+              EMA α {EMA_ALPHA}
+            </Chip>
+          </div>
+        </Card>
+
+        <Card className="m-0 flex-1" ariaLabel="Reference background">
+          <div className="mb-3 flex items-center justify-between gap-3">
+            <div>
+              <p className="text-sm font-semibold">Reference frame</p>
+              <p className="text-secondary mt-0.5 text-xs">
+                Used to compare motion
+              </p>
+            </div>
             <button
               type="button"
               onClick={triggerResetBackground}
-              style={{
-                textDecoration: "underline",
-                cursor: "pointer",
-                background: "none",
-                border: "none",
-                color: "#9ca3af",
-                padding: 0,
-              }}
+              className="focus-visible:ring-primary/50 cursor-pointer rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs font-semibold text-slate-300 transition hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:outline-none"
             >
-              (Reset)
+              Reset
             </button>
           </div>
           {initialBgDataUrl ? (
             <img
               src={initialBgDataUrl}
               alt="initial background"
-              className="mt-1 h-[120px] w-40 object-cover"
+              className="aspect-video w-full rounded-md border border-white/8 bg-black/30 object-cover"
             />
           ) : (
-            <div className="mt-1 h-[120px] w-40 border border-gray-300 bg-gray-300" />
+            <div className="bg-bg/40 grid aspect-video w-full place-items-center rounded-md border border-dashed border-white/10 text-xs text-slate-500">
+              Waiting for camera…
+            </div>
           )}
-        </div>
+        </Card>
       </div>
 
       <div className="hidden">
