@@ -1,181 +1,56 @@
-# Alarm Camera - University AI Course Project
+# Alarm Camera
 
-A browser-based motion detection application created as a university project for an Artificial Intelligence course. It uses React, TypeScript, and lightweight computer vision techniques to demonstrate real-time, local video processing.
+A browser-based motion detection demo built with React and TypeScript for a university AI course.
 
-## 🚀 Features
+**Live demo:** [Open on Vercel](https://alarm-cam.vercel.app)
 
-### Core Motion Detection
+## Overview
 
-- **Real-time Processing**: Analyzes video frames at 10 FPS with minimal latency
-- **Advanced Background Modeling**: Uses exponential moving average to learn and adapt to environmental changes
-- **Adaptive Thresholding**: Dynamically adjusts sensitivity based on current conditions
-- **Multi-frame Confirmation**: Requires consecutive motion frames to reduce false positives
-- **Sudden Light Detection**: Specialized detection for rapid lighting changes
-- **Smart Pause System**: Prevents alert spam with configurable pause periods
+Created for a university Artificial Intelligence course to explore local video processing with background subtraction, adaptive thresholds, and multi-frame confirmation.
 
-### Intelligent Features
+## Features
 
-- **Bounding Box Detection**: Identifies and highlights exact motion areas
-- **Four-Image capture**: Before, after, background reference, and zoomed detection area
-- **Audio Alerts**: Customizable beep notifications using Web Audio API
-- **Background Reset**: Manual and automatic background recalibration
-- **Detection Statistics**: Detailed metrics including change ratios and brightness differences
+- Process webcam frames locally at 10 FPS and highlight detected movement.
+- Capture detection snapshots and play audio alerts.
+- Optionally save detections in IndexedDB and export saved records as JSON.
+- Open the camera dashboard without an account.
 
-### Data Management
+## Tech stack
 
-- **Local Storage**: Uses IndexedDB for offline detection history
-- **Export Functionality**: Download detection data as JSON for analysis
-- **No account required**: The camera dashboard opens directly without login or email collection
-- **Real-time Statistics**: Live display of processing parameters and detection counts
+React 19, TypeScript, Vite, Tailwind CSS, Canvas, MediaDevices, IndexedDB, Web Audio.
 
-### User Experience
+## Run locally
 
-- **Responsive Design**: Works on desktop and mobile devices
-- **Toast Notifications**: Real-time status updates and countdown timers
-- **Processing Indicators**: Visual feedback for system status
-- **Clean Interface**: Modern UI with Tailwind CSS styling
+Use Node.js 22.12 or newer and npm.
 
-## 🛠️ Technical Stack
-
-- **Frontend**: React 19 + TypeScript
-- **Styling**: Tailwind CSS with custom theme
-- **Image Processing**: HTML5 Canvas API
-- **Camera Access**: WebRTC MediaDevices API
-- **Storage**: IndexedDB for client-side persistence
-- **Audio**: Web Audio API for alert sounds
-- **Build Tool**: Vite with hot module replacement
-- **Code Quality**: ESLint + Prettier with strict TypeScript
-
-## 📊 Processing Parameters
-
-| Parameter           | Value  | Description                                 |
-| ------------------- | ------ | ------------------------------------------- |
-| Frame Rate          | 10 FPS | Processing frequency for motion analysis    |
-| Background Alpha    | 0.02   | Learning rate for background adaptation     |
-| EMA Alpha           | 0.05   | Exponential moving average smoothing factor |
-| Sensitivity Factor  | 1.8    | Motion detection sensitivity multiplier     |
-| Confirmation Frames | 2      | Required consecutive motion frames          |
-| Pause Duration      | 3000ms | Post-detection pause to prevent spam        |
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Node.js 18+ and npm/yarn
-- Modern web browser with camera access
-- HTTPS connection (required for camera access)
-
-### Installation
-
-```bash
-# Clone the repository
+```sh
 git clone https://github.com/ThePrimeShak/alarm-cam.git
 cd alarm-cam
-
-# Install dependencies
-npm install
-
-# Start development server
+npm ci
 npm run dev
-
-# Build for production
-npm run build
 ```
 
-### Development Scripts
+## Available scripts
 
-```bash
-npm run dev          # Start development server with hot reload
-npm run build        # Build for production
-npm run preview      # Preview production build
-npm run lint         # Run ESLint checks
-npm run lint:fix     # Fix linting issues automatically
-npm run format       # Format code with Prettier
-npm run format:check # Check code formatting
-```
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Start the development server |
+| `npm run build` | Create the production build |
+| `npm run preview` | Preview the production build |
+| `npm run lint` | Check code with ESLint |
+| `npm run lint:fix` | Apply ESLint fixes |
+| `npm run format` | Format project files |
+| `npm run format:check` | Check formatting |
 
-## 🔧 Configuration
+## Project structure
 
-### Environment Setup
+- `src/components/camera/` — camera controls, processing, and detection history.
+- `src/utils/` — image-processing, storage, and audio helpers.
 
-The application runs entirely in the browser with no backend requirements. Key configurations:
+## Scope and limitations
 
-- **Camera Resolution**: Automatically adapts to device capabilities
-- **Processing Rate**: Configurable via `PROCESS_FPS` constant
-- **Detection Sensitivity**: Adjustable through various algorithm parameters
-- **Storage Limits**: Maximum 1000 detections in memory
+Requires a camera, browser permission, and HTTPS or localhost. Detection quality depends on lighting and camera conditions; this is an educational demo.
 
-### Algorithm Tuning
+## Author
 
-Key parameters can be adjusted in `src/components/camera/CameraView.tsx`:
-
-```typescript
-const PROCESS_FPS = 10; // Processing frequency
-const ALPHA_BG = 0.02; // Background learning rate
-const EMA_ALPHA = 0.05; // Moving average smoothing
-const SENSITIVITY_FACTOR = 1.8; // Detection sensitivity
-const PAUSE_AFTER_DETECTION_MS = 3000; // Post-detection pause
-const MOTION_CONFIRM_FRAMES = 2; // Confirmation requirement
-```
-
-## 🏗️ Architecture
-
-### Core Components
-
-- **CameraView**: Main detection engine with video processing
-- **DetectionList**: Display and management of detection history
-- **Camera**: Parent component coordinating detection flow
-- **Frame Utils**: Image processing and computer vision algorithms
-
-### Key Algorithms
-
-1. **Grayscale Conversion**: RGB to luminance using standard coefficients
-2. **Background Subtraction**: Pixel-wise difference with adaptive background
-3. **Binary Thresholding**: Adaptive threshold based on environmental analysis
-4. **Morphological Operations**: Noise reduction and region enhancement
-5. **Bounding Box Calculation**: Precise motion area identification
-
-### Data Flow
-
-```
-Video Stream → Frame Capture → Grayscale → Background Subtraction →
-Thresholding → Motion Analysis → Detection Decision → Alert & Storage
-```
-
-## 🎯 Use Cases
-
-- **Home Security**: Monitor entrances, rooms, or outdoor areas
-- **Office Surveillance**: Track after-hours activity or unauthorized access
-- **Pet Monitoring**: Keep track of pet behavior and activity
-- **Research**: Computer vision algorithm testing and development
-- **Education**: Demonstrate motion detection concepts and techniques
-
-## 🔒 Privacy & Security
-
-- **Local Processing**: All video analysis happens in your browser
-- **No Cloud Upload**: Video streams never leave your device
-- **Local Storage**: Detection data stored locally in IndexedDB
-- **User Control**: Complete control over when detection is active
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit pull requests or open issues for bugs and feature requests.
-
-### Development Guidelines
-
-- Follow TypeScript strict mode requirements
-- Use ESLint and Prettier for code formatting
-- Write meaningful commit messages
-- Test thoroughly across different devices and browsers
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-## 👨‍💻 Author
-
-Developed by **ThePrimeShak** — [LinkedIn](https://www.linkedin.com/in/theprimeshak/) · [GitHub](https://github.com/ThePrimeShak)
-
----
-
-_Transform your browser into a powerful motion detection system with Alarm Camera!_
+Built by [ThePrimeShak](https://github.com/ThePrimeShak) · [LinkedIn](https://www.linkedin.com/in/theprimeshak/).
